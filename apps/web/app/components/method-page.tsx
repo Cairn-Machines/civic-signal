@@ -264,7 +264,7 @@ export const MethodPage = () => (
           Read the source. Propose a poll. Run the auditor.
         </h2>
         <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
-          <Link href="https://github.com/montytorr/civicsignal" target="_blank" rel="noopener noreferrer">
+          <Link href="https://github.com/Cairn-Machines/civic-signal" target="_blank" rel="noopener noreferrer">
             <Btn kind="ghost" size="md">Auditor CLI →</Btn>
           </Link>
           <Link href="/proposals">

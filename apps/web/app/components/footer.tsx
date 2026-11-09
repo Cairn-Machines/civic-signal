@@ -17,13 +17,13 @@ const PROJECT_LINKS = [
 ]
 
 const OPEN_LINKS = [
-  { label: 'GitHub', href: 'https://github.com/montytorr/civicsignal', external: true },
+  { label: 'GitHub', href: 'https://github.com/Cairn-Machines/civic-signal', external: true },
   { label: 'Public audit', href: '/verify' },
   { label: 'Signal report', href: '/reports' },
   { label: 'Audit export', href: '/api/audit/export' },
-  { label: 'License (MPL-2.0)', href: 'https://github.com/montytorr/civicsignal/blob/main/LICENSE', external: true },
-  { label: 'Contributing', href: 'https://github.com/montytorr/civicsignal/blob/main/CONTRIBUTING.md', external: true },
-  { label: 'Security', href: 'https://github.com/montytorr/civicsignal/blob/main/SECURITY.md', external: true },
+  { label: 'License (MPL-2.0)', href: 'https://github.com/Cairn-Machines/civic-signal/blob/main/LICENSE', external: true },
+  { label: 'Contributing', href: 'https://github.com/Cairn-Machines/civic-signal/blob/main/CONTRIBUTING.md', external: true },
+  { label: 'Security', href: 'https://github.com/Cairn-Machines/civic-signal/blob/main/SECURITY.md', external: true },
 ]
 
 const FooterLink = ({

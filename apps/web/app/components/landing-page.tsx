@@ -542,7 +542,7 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
         {[
-          { k: 'Repo', v: 'github.com/montytorr/civicsignal' },
+          { k: 'Repo', v: 'github.com/Cairn-Machines/civic-signal' },
           { k: 'License', v: 'MPL-2.0' },
           { k: 'Steward', v: 'CivicSignal Foundation' },
           { k: 'Audit', v: 'Coming soon' },

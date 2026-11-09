@@ -40,7 +40,7 @@ Before opening the repository broadly, keep these files current: `README.md`, `C
 You need Node.js 22+, pnpm 9.15.4 and a Postgres 17 server (a Docker container is enough).
 
 ```bash
-git clone https://github.com/montytorr/civic-signal.git
+git clone https://github.com/Cairn-Machines/civic-signal.git
 cd civic-signal
 corepack enable
 corepack prepare pnpm@9.15.4 --activate
@@ -81,7 +81,7 @@ Never commit real secrets, database URLs or Resend keys; `.env.example` is the c
 - **Sealed votes:** the server checks the answer, encrypts it to the poll's public key and stores only the ciphertext and a receipt hash. The poll's secret key lives in the server-only `poll_secrets` table. At resolution the ballots are opened in memory: only per-answer totals (`poll_results`, public once resolved) and each voter's correctness are written.
 - **Reputation privacy:** a topic score is public only as a coarse tier, from Contributor (5 correct answers) up. Exact scores, per-poll results and "your vote" are visible to their owner alone.
 - **Production:** https://civicsignal.montytorr.com, on clawdius. Docker Compose runs `civicsignal-web` (Next.js standalone, behind Traefik) and `civicsignal-resolver` (non-root); runtime configuration comes from `/home/runner/civicsignal-secrets/web.env`.
-- **Deploy:** push (or merge) to `main` in [montytorr/civic-signal](https://github.com/montytorr/civic-signal). The `Deploy CivicSignal` workflow runs on the self-hosted runner `civicsignal-runner` on clawdius, which runs `scripts/deploy.sh`: tests, image builds, migrations, start, health check. A commit whose message contains `[skip ci]` does not deploy.
+- **Deploy:** push (or merge) to `main` in [Cairn-Machines/civic-signal](https://github.com/Cairn-Machines/civic-signal). The `Deploy CivicSignal` workflow runs on the self-hosted runner `civicsignal-runner` on clawdius, which runs `scripts/deploy.sh`: tests, image builds, migrations, start, health check. A commit whose message contains `[skip ci]` does not deploy.
 
 
 ## Core Thesis
@@ -592,7 +592,7 @@ My favorite: CivicSignal. It says what it does without sounding like a DAO from 
 - 2026-05-03: Chain should be invisible/free to users at launch. Use off-chain app DB + cryptographic audit commitments, with optional low-cost chain anchoring later.
 - 2026-05-03: Cal agreed chain costs, if/when anchoring is enabled, are paid by the platform via backend wallet — no user gas, no wallet requirement, no tokenomics.
 - 2026-05-03: Chain lives beside the app as a thin audit layer: commitment service + L2 anchoring contract + public verifier, not as the core product UX.
-- 2026-05-03: Created private GitHub repo at https://github.com/montytorr/civicsignal and seeded it with the updated project/design markdown docs.
+- 2026-05-03: Created private GitHub repo at https://github.com/Cairn-Machines/civic-signal and seeded it with the updated project/design markdown docs.
 - 2026-05-03: Reputation is non-transferable, topic-specific, and only increases on correct/winning outcomes.
 - 2026-05-03: Product should lead with democracy/civic legitimacy, not crypto/token language.
 - 2026-05-03: Working name is CivicSignal.
