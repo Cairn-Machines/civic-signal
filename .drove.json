@@ -3,6 +3,7 @@
     "npx --yes pnpm@9.15.4 install --frozen-lockfile",
     "npx --yes pnpm@9.15.4 typecheck",
     "npx --yes pnpm@9.15.4 lint",
-    "npx --yes pnpm@9.15.4 -r test"
+    "npx --yes pnpm@9.15.4 -r test",
+    "npm run build"
   ]
 }
