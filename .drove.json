@@ -1,6 +1,6 @@
 {
   "setup": [
-    "npx --yes pnpm@9.15.4 install --frozen-lockfile"
+    "pnpm install --frozen-lockfile"
   ],
   "quickChecks": [
     "npx --yes pnpm@9.15.4 typecheck",
