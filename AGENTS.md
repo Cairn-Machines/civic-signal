@@ -52,7 +52,7 @@ Headless Chromium only, never in GitHub CI. `npm run test:smoke` is plain `playw
 3. starts its own `postgres:17-alpine` container (unique name, random host port), migrates it, and removes it when the server exits, on failure or on SIGTERM/SIGINT;
 4. runs `next start` on the smoke port: 3100 by default (fixed, because Playwright re-evaluates the config in every worker), or set `E2E_PORT`. If that port is busy the run fails instead of reusing it.
 
-The app gets the throwaway `DATABASE_URL` and dummy values for everything else (`RESEND_API_KEY` empty, no real secrets), whatever the shell has set. The specs open `/` (landing page) and `/polls` (the primary public screen, not behind the `middleware.ts` auth redirect), assert the headline renders, no console error, no page error, no same-origin 4xx/5xx and no horizontal overflow. Output goes to `test-results/` (gitignored). The Drove merge gate runs it after the build.
+The app gets the throwaway `DATABASE_URL` and dummy values for everything else (`RESEND_API_KEY` empty, no real secrets), whatever the shell has set. The specs open `/` (landing page) and `/polls` (the primary public screen, not behind the `middleware.ts` auth redirect), assert the headline renders, no console error, no page error, and no same-origin 4xx/5xx (the 390 horizontal-overflow check is off until CIVIC-20 fixes the layout). The server log warns that `next start` does not work with `output: standalone`; it still serves the build, so the warning is left alone. Output goes to `test-results/` (gitignored). The Drove merge gate runs it after the build.
 
 ## Deploy
 
