@@ -11,5 +11,8 @@
     "npx --yes pnpm@9.15.4 lint",
     "npx --yes pnpm@9.15.4 -r test",
     "npm run build"
+  ],
+  "e2eSmoke": [
+    "npm run test:smoke"
   ]
 }
