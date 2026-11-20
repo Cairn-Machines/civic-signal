@@ -1,7 +1,9 @@
 import { defineConfig, devices } from '@playwright/test'
 
 // Browser tests run locally (the Drove merge gate, `npm run test:smoke`), never in GitHub CI.
-// scripts/smoke/run.mjs builds the app, starts a throwaway Postgres and sets E2E_PORT and SMOKE_DATABASE_URL.
+// The webServer is scripts/smoke/serve.mjs: it builds the app, starts a throwaway docker Postgres,
+// migrates it and runs `next start`, so a plain `playwright test` is self-contained.
+// E2E_PORT overrides the port; the default 3100 is fixed because every worker re-evaluates this file.
 const port = Number(process.env.E2E_PORT) || 3100
 const origin = `http://127.0.0.1:${port}`
 
@@ -23,20 +25,11 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: `node node_modules/next/dist/bin/next start -H 127.0.0.1 -p ${port}`,
-    cwd: './apps/web',
+    command: 'node scripts/smoke/serve.mjs',
     url: `${origin}/api/health`,
     reuseExistingServer: false,
-    timeout: 60_000,
-    gracefulShutdown: { signal: 'SIGTERM', timeout: 5_000 },
-    env: {
-      NODE_ENV: 'production',
-      DATABASE_URL: process.env.SMOKE_DATABASE_URL ?? '',
-      APP_URL: origin,
-      NEXT_PUBLIC_SITE_URL: origin,
-      EMAIL_FROM: 'CivicSignal <smoke@example.invalid>',
-      RESEND_API_KEY: '',
-      SESSION_SECRET: 'smoke-not-a-secret',
-    },
+    timeout: 240_000,
+    gracefulShutdown: { signal: 'SIGTERM', timeout: 10_000 },
+    env: { E2E_PORT: String(port) },
   },
 })

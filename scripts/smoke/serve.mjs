@@ -1,14 +1,14 @@
-// `npm run test:smoke`: builds the app, starts a throwaway Postgres in docker, migrates it, then runs the
-// @smoke Playwright set against `next start` on a free port. Everything it starts is removed on exit.
+// The smoke's Playwright webServer command (see playwright.config.ts): build the app, start a throwaway
+// Postgres in docker, migrate it, then run `next start` on E2E_PORT. The container is removed when the
+// server exits or this process gets SIGTERM/SIGINT, and on any failure.
 import { spawn, spawnSync } from 'node:child_process'
 import { randomBytes } from 'node:crypto'
-import { createServer } from 'node:net'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
-const run = randomBytes(4).toString('hex')
-const containerName = `civicsignal-smoke-pg-${process.pid}-${run}`
+const port = String(Number(process.env.E2E_PORT) || 3100)
+const containerName = `civicsignal-smoke-pg-${process.pid}-${randomBytes(4).toString('hex')}`
 const password = `smoke-${randomBytes(8).toString('hex')}`
 
 let activeChild = null
@@ -17,45 +17,32 @@ let containerStarted = false
 const sh = (command, args, options = {}) =>
   spawnSync(command, args, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], ...options })
 
-const removeContainer = () => {
-  if (!containerStarted) return
-  containerStarted = false
-  sh('docker', ['rm', '-f', containerName])
-}
-
 const stopAll = (code) => {
   activeChild?.kill('SIGTERM')
-  removeContainer()
+  if (containerStarted) {
+    containerStarted = false
+    sh('docker', ['rm', '-f', containerName])
+  }
   process.exit(code)
 }
 
 const fail = (message) => {
-  console.error(`test:smoke: ${message}`)
+  console.error(`smoke serve: ${message}`)
   stopAll(1)
 }
 
 process.on('SIGINT', () => stopAll(130))
 process.on('SIGTERM', () => stopAll(143))
 
-const stream = (command, args, env) =>
+const stream = (command, args, { cwd = root, env }) =>
   new Promise((resolveExit) => {
-    const child = spawn(command, args, { cwd: root, env, stdio: ['ignore', 'inherit', 'inherit'] })
+    const child = spawn(command, args, { cwd, env, stdio: ['ignore', 'inherit', 'inherit'] })
     activeChild = child
     child.on('error', (error) => {
-      console.error(`test:smoke: ${command} failed to start: ${error.message}`)
+      console.error(`smoke serve: ${command} failed to start: ${error.message}`)
       resolveExit(1)
     })
     child.on('exit', (code, signal) => resolveExit(code ?? (signal ? 1 : 0)))
-  })
-
-const freePort = () =>
-  new Promise((resolvePort, reject) => {
-    const server = createServer()
-    server.on('error', reject)
-    server.listen(0, '127.0.0.1', () => {
-      const { port } = server.address()
-      server.close(() => resolvePort(port))
-    })
   })
 
 const waitForPostgres = async () => {
@@ -71,8 +58,8 @@ const main = async () => {
   if (docker.status !== 0) fail('docker is not available (is the daemon running?); the smoke needs a throwaway Postgres container')
 
   // Always build: `npm run build` is turbo-cached on its inputs, so a stale .next is never served.
-  console.log('test:smoke: building the app (npm run build)')
-  if ((await stream('npm', ['run', 'build'], { ...process.env, CI: '1' })) !== 0) fail('npm run build failed')
+  console.log('smoke serve: building the app (npm run build)')
+  if ((await stream('npm', ['run', 'build'], { env: { ...process.env, CI: '1' } })) !== 0) fail('npm run build failed')
 
   const started = sh('docker', [
     'run', '--rm', '-d', '--name', containerName,
@@ -90,13 +77,25 @@ const main = async () => {
   const databaseUrl = `postgresql://postgres:${password}@127.0.0.1:${dbPort}/postgres`
 
   const migrateEnv = { ...process.env, DATABASE_URL: databaseUrl }
-  if ((await stream(join(root, 'packages/db/node_modules/.bin/tsx'), ['packages/db/src/migrate.ts'], migrateEnv)) !== 0) {
+  if ((await stream(join(root, 'packages/db/node_modules/.bin/tsx'), ['packages/db/src/migrate.ts'], { env: migrateEnv })) !== 0) {
     fail('database migration failed')
   }
 
-  const port = await freePort()
-  const smokeEnv = { ...process.env, CI: '1', E2E_PORT: String(port), SMOKE_DATABASE_URL: databaseUrl }
-  return stream(join(root, 'node_modules/.bin/playwright'), ['test', ...process.argv.slice(2)], smokeEnv)
+  const origin = `http://127.0.0.1:${port}`
+  const serverEnv = {
+    ...process.env,
+    NODE_ENV: 'production',
+    DATABASE_URL: databaseUrl,
+    APP_URL: origin,
+    NEXT_PUBLIC_SITE_URL: origin,
+    EMAIL_FROM: 'CivicSignal <smoke@example.invalid>',
+    RESEND_API_KEY: '',
+    SESSION_SECRET: 'smoke-not-a-secret',
+  }
+  return stream('node', ['node_modules/next/dist/bin/next', 'start', '-H', '127.0.0.1', '-p', port], {
+    cwd: join(root, 'apps/web'),
+    env: serverEnv,
+  })
 }
 
 main()

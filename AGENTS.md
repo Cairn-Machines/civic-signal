@@ -19,7 +19,7 @@ Guide for coding agents (and people) working in CivicSignal: open-source verifie
 | `packages/ui` | Shared UI components |
 | `services/resolver` | Background service that closes polls, commits Merkle roots and scores resolved polls |
 | `docs/` | Product spec, schema, authz rules, design brief, launch QA |
-| `scripts/` | `deploy.sh`, `host/` (runner and env setup), lifecycle smoke scripts, `smoke/` (the browser smoke wrapper) |
+| `scripts/` | `deploy.sh`, `host/` (runner and env setup), lifecycle smoke scripts, `smoke/` (the browser smoke's webServer script) |
 | `e2e/`, `playwright.config.ts` | Playwright `@smoke` specs and config |
 
 ## Commands
@@ -45,12 +45,12 @@ Never commit real secrets, database URLs or Resend keys.
 
 ## Browser smoke (`npm run test:smoke`)
 
-Headless Chromium only, never in GitHub CI. `scripts/smoke/run.mjs`:
+Headless Chromium only, never in GitHub CI. `npm run test:smoke` is plain `playwright test` (`playwright.config.ts`, `list` reporter, projects at 1440 and 390 wide, `reuseExistingServer: false`), so it is self-contained: the Playwright webServer is `scripts/smoke/serve.mjs`, which
 
 1. checks that Docker works (exits nonzero with a message if not);
 2. always runs `npm run build` first (turbo-cached on its inputs, so a stale `.next` is never served; the smoke serves the production build with `next start`, not the dev server);
-3. starts its own `postgres:17-alpine` container (unique name, random port), migrates it, and removes it on exit, failure or signal;
-4. picks a free port and runs Playwright (`playwright.config.ts`, `reuseExistingServer: false`, `list` reporter) at 1440 and 390 wide.
+3. starts its own `postgres:17-alpine` container (unique name, random host port), migrates it, and removes it when the server exits, on failure or on SIGTERM/SIGINT;
+4. runs `next start` on the smoke port: 3100 by default (fixed, because Playwright re-evaluates the config in every worker), or set `E2E_PORT`. If that port is busy the run fails instead of reusing it.
 
 The app gets the throwaway `DATABASE_URL` and dummy values for everything else (`RESEND_API_KEY` empty, no real secrets), whatever the shell has set. The specs open `/` (landing page) and `/polls` (the primary public screen, not behind the `middleware.ts` auth redirect), assert the headline renders, no console error, no page error, no same-origin 4xx/5xx and no horizontal overflow. Output goes to `test-results/` (gitignored). The Drove merge gate runs it after the build.
 
