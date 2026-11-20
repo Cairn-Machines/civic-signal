@@ -59,5 +59,9 @@ apps/web/supabase/.temp/
 # TypeScript incremental build info (rewritten by every typecheck)
 *.tsbuildinfo
 
+# Playwright smoke output
+test-results/
+playwright-report/
+
 # Claude Code / Drove worker worktrees
 .claude/worktrees/
