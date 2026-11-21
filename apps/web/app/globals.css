@@ -87,6 +87,7 @@
 
   /* Make nav tabs horizontally scrollable on small screens */
   .cs-nav-tabs {
+    min-width: 0;
     overflow-x: auto;
     white-space: nowrap;
     scrollbar-width: none;
@@ -102,6 +103,10 @@
   .cs-form-grid,
   .cs-stat-grid {
     grid-template-columns: 1fr !important;
+  }
+
+  .cs-hero-title {
+    font-size: 34px !important;
   }
 
   .cs-stack-mobile {
