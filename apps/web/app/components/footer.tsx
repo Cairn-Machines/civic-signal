@@ -57,9 +57,9 @@ const FooterLink = ({
 
 export const Footer = () => (
   <footer className="border-t border-parchment-line">
-    <div style={{ maxWidth: 1280, margin: '0 auto', padding: '40px 40px 32px' }}>
+    <div className="cs-page-pad" style={{ maxWidth: 1280, margin: '0 auto', padding: '40px 40px 32px' }}>
       <div
-        className="grid gap-[40px]"
+        className="grid gap-[40px] cs-responsive-grid"
         style={{ gridTemplateColumns: '1.4fr 1fr 1fr 1fr' }}
       >
         <div className="flex flex-col gap-3">

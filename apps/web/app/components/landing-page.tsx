@@ -32,7 +32,7 @@ const Globe = ({ size = 420 }: { size?: number }) => {
   ]
 
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+    <svg width={size} height={size} style={{ maxWidth: '100%', height: 'auto' }} viewBox={`0 0 ${size} ${size}`}>
       <defs>
         <style>{`
           @keyframes cs-globe-rotate {
@@ -107,7 +107,7 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
   <div className="bg-parchment-bg text-parchment-ink" style={{ minHeight: '100%' }}>
 
     {/* HERO */}
-    <section
+    <section className="cs-page-pad cs-responsive-grid"
       style={{
         maxWidth: 1440,
         margin: '0 auto',
@@ -142,6 +142,7 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
 
         {/* H1 */}
         <h1
+          className="cs-hero-title"
           style={{
             margin: '24px 0 0',
             fontSize: 64,
@@ -170,7 +171,7 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
         </p>
 
         {/* CTAs */}
-        <div style={{ display: 'flex', gap: 12, marginTop: 32 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 32 }}>
           <Link href="/polls">
             <Btn kind="primary" size="lg">Explore active polls</Btn>
           </Link>
@@ -184,6 +185,7 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
           className="font-mono"
           style={{
             display: 'flex',
+            flexWrap: 'wrap',
             gap: 28,
             marginTop: 36,
             paddingTop: 24,
@@ -207,13 +209,13 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
       </div>
 
       {/* Right column — Globe */}
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', minWidth: 0 }}>
         <Globe size={420} />
       </div>
     </section>
 
     {/* TRUST LINE */}
-    <section
+    <section className="cs-page-pad"
       style={{
         padding: '20px 56px 28px',
         borderTop: '1px solid #D9D1BD',
@@ -224,6 +226,7 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
       <div
         style={{
           display: 'flex',
+          flexWrap: 'wrap',
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: 24,
@@ -237,14 +240,14 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
     </section>
 
     {/* THREE PILLARS */}
-    <section style={{ maxWidth: 1440, margin: '0 auto', padding: '88px 56px' }}>
+    <section className="cs-page-pad" style={{ maxWidth: 1440, margin: '0 auto', padding: '88px 56px' }}>
       <div
-        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 48 }}
+        style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 48 }}
       >
         <Eyebrow>How it works</Eyebrow>
         <span className="font-mono" style={{ fontSize: 11, color: '#6B7488' }}>01 / 04</span>
       </div>
-      <div
+      <div className="cs-responsive-grid"
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(4, 1fr)',
@@ -314,9 +317,9 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
     </section>
 
     {/* EXAMPLE POLLS */}
-    <section style={{ maxWidth: 1440, margin: '0 auto', padding: '0 56px 88px' }}>
+    <section className="cs-page-pad" style={{ maxWidth: 1440, margin: '0 auto', padding: '0 56px 88px' }}>
       <div
-        style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 32 }}
+        style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 32 }}
       >
         <h2
           style={{ margin: 0, fontSize: 28, fontWeight: 500, letterSpacing: '-0.02em', color: '#0E1F36' }}
@@ -331,7 +334,7 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
           See all active polls →
         </Link>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
+      <div className="cs-responsive-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
         {polls.map((poll) => (
           <PollCard key={poll.id} poll={poll} href={`/polls/${poll.id}`} />
         ))}
@@ -339,7 +342,7 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
     </section>
 
     {/* METHODOLOGY PREVIEW */}
-    <section
+    <section className="cs-page-pad cs-responsive-grid"
       style={{
         maxWidth: 1440,
         margin: '0 auto',
@@ -372,7 +375,7 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
           <Link href="/methodology"><Btn kind="ghost" size="md">Read methodology →</Btn></Link>
         </div>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
+      <div className="cs-responsive-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
         <MethodCallout label="Community proposals">
           Verified users can propose polls with a topic, region, options, source-of-truth, and resolution criteria.
         </MethodCallout>
@@ -390,7 +393,7 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
     </section>
 
     {/* DEMOCRACY ROADMAP */}
-    <section
+    <section className="cs-page-pad"
       style={{
         padding: '88px 56px',
         background: '#FBF8F1',
@@ -403,6 +406,8 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
           maxWidth: 1440,
           margin: '0 auto',
           display: 'flex',
+          flexWrap: 'wrap',
+          gap: 12,
           justifyContent: 'space-between',
           alignItems: 'baseline',
           marginBottom: 40,
@@ -428,7 +433,7 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
           v0.8 → v1.0
         </span>
       </div>
-      <div
+      <div className="cs-responsive-grid"
         style={{
           maxWidth: 1440,
           margin: '0 auto',
@@ -502,7 +507,7 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
     </section>
 
     {/* OPEN-SOURCE STRIP */}
-    <section
+    <section className="cs-page-pad cs-responsive-grid"
       style={{
         maxWidth: 1440,
         margin: '0 auto',
@@ -540,7 +545,7 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
           constraint is encoded in the foundation&rsquo;s charter.
         </p>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
+      <div className="cs-responsive-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
         {[
           { k: 'Repo', v: 'github.com/Cairn-Machines/civic-signal' },
           { k: 'License', v: 'MPL-2.0' },
