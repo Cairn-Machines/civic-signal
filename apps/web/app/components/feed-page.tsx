@@ -29,7 +29,7 @@ export const FeedPage = ({ polls, topics }: Props) => {
 
   return (
     <div style={{ background: 'var(--color-parchment-bg)', color: 'var(--color-parchment-ink)', minHeight: '100%' }}>
-      <main style={{ padding: '40px 40px 80px', maxWidth: 1280, margin: '0 auto' }}>
+      <main className="cs-page-container" style={{ paddingTop: 40, paddingBottom: 80 }}>
         {/* Header row */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>
           <div>
@@ -65,6 +65,8 @@ export const FeedPage = ({ polls, topics }: Props) => {
               return (
                 <button
                   key={t}
+                  data-testid="filter-chip"
+                  className="cs-control"
                   onClick={() => setTopic(t)}
                   style={{
                     padding: '6px 12px',
@@ -86,6 +88,8 @@ export const FeedPage = ({ polls, topics }: Props) => {
 
           {/* Region select */}
           <select
+            className="cs-control"
+            data-testid="region-select"
             value={region}
             onChange={(e) => setRegion(e.target.value)}
             style={{
@@ -114,6 +118,8 @@ export const FeedPage = ({ polls, topics }: Props) => {
             {SORT_OPTIONS.map((s) => (
               <button
                 key={s}
+                data-testid="sort-button"
+                className="cs-control"
                 onClick={() => setSort(s)}
                 style={{
                   padding: '4px 8px',
@@ -153,7 +159,8 @@ export const FeedPage = ({ polls, topics }: Props) => {
             </div>
             <button
               onClick={() => { setTopic('All'); setRegion('All regions'); setSort('Cutoff') }}
-              className="font-mono"
+              className="font-mono cs-control"
+              data-testid="reset-filters"
               style={{ marginTop: 14, fontSize: 11, color: 'var(--color-parchment-accent)', background: 'transparent', border: 'none', cursor: 'pointer', letterSpacing: '0.04em' }}
             >
               RESET FILTERS

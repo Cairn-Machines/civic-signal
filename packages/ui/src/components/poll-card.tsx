@@ -40,20 +40,20 @@ export const PollCard = ({ poll, href, className }: PollCardProps) => {
         className,
       ].filter(Boolean).join(' ')}
     >
-      <div className="flex items-center gap-[14px]">
+      <div className="flex flex-wrap items-center gap-x-[14px] gap-y-2">
         <TopicBadge topicId={poll.topic} />
         <span className="shrink-0 inline-block w-px h-3 bg-parchment-line" />
-        <span className="font-mono text-[10.5px] font-medium tracking-[0.04em] uppercase text-parchment-muted">
+        <span className="font-mono text-[10.5px] font-medium tracking-[0.04em] uppercase text-parchment-muted whitespace-nowrap">
           {poll.region}
         </span>
         <span className="flex-1" />
         {poll.answered && (
-          <Badge tone="green" mono>
+          <Badge tone="green" mono className="whitespace-nowrap">
             Answered
           </Badge>
         )}
         {!poll.answered && poll.status === 'closed' && (
-          <Badge tone="amber" mono>
+          <Badge tone="amber" mono className="whitespace-nowrap" data-testid="poll-status-badge">
             Closed · awaiting resolution
           </Badge>
         )}

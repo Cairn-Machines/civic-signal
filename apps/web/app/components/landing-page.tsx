@@ -2,6 +2,10 @@ import Link from 'next/link'
 import { PollCard, MethodCallout, Eyebrow, Btn, Badge } from '@civicsignal/ui'
 import type { Poll } from '@civicsignal/ui'
 
+export const HERO_STAT_LABEL_COLOR = '#3A4861'
+export const HERO_STAT_VALUE_COLOR = '#0E1F36'
+export const HERO_STAT_LABEL_SIZE = 12
+
 // ─── Globe SVG ───────────────────────────────────────────────────────────────
 
 const Globe = ({ size = 420 }: { size?: number }) => {
@@ -107,11 +111,10 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
   <div className="bg-parchment-bg text-parchment-ink" style={{ minHeight: '100%' }}>
 
     {/* HERO */}
-    <section className="cs-page-pad cs-responsive-grid"
+    <section className="cs-page-container cs-responsive-grid"
       style={{
-        maxWidth: 1440,
-        margin: '0 auto',
-        padding: '88px 56px 96px',
+        paddingTop: 88,
+        paddingBottom: 96,
         display: 'grid',
         gridTemplateColumns: '1.15fr 1fr',
         gap: 64,
@@ -182,29 +185,33 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
 
         {/* Stat strip */}
         <div
-          className="font-mono"
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 28,
-            marginTop: 36,
-            paddingTop: 24,
-            borderTop: '1px solid #E5DEC9',
-            color: '#6B7488',
-          }}
+          className="cs-hero-stats"
+          style={{ marginTop: 36, paddingTop: 24, borderTop: '1px solid #E5DEC9' }}
         >
-          <span style={{ fontSize: 11, letterSpacing: '0.04em' }}>
-            <span className="font-mono" style={{ color: '#0E1F36', fontSize: 13 }}>{stats.verifiedHumans.toLocaleString()}</span>
-            &nbsp; verified humans
-          </span>
-          <span style={{ fontSize: 11, letterSpacing: '0.04em' }}>
-            <span className="font-mono" style={{ color: '#0E1F36', fontSize: 13 }}>{stats.pollsResolved.toLocaleString()}</span>
-            &nbsp; polls resolved
-          </span>
-          <span style={{ fontSize: 11, letterSpacing: '0.04em' }}>
-            <span className="font-mono" style={{ color: '#0E1F36', fontSize: 13 }}>{stats.regions}</span>
-            &nbsp; regions
-          </span>
+          <div className="cs-hero-stat" data-testid="hero-stat">
+            <div className="font-mono" style={{ color: HERO_STAT_VALUE_COLOR, fontSize: 24, lineHeight: 1.2, fontVariantNumeric: 'tabular-nums' }}>
+              {stats.verifiedHumans.toLocaleString()}
+            </div>
+            <div className="font-mono" data-testid="hero-stat-label" style={{ color: HERO_STAT_LABEL_COLOR, fontSize: HERO_STAT_LABEL_SIZE, letterSpacing: '0.06em', textTransform: 'uppercase', marginTop: 4, overflowWrap: 'anywhere' }}>
+              verified humans
+            </div>
+          </div>
+          <div className="cs-hero-stat" data-testid="hero-stat">
+            <div className="font-mono" style={{ color: HERO_STAT_VALUE_COLOR, fontSize: 24, lineHeight: 1.2, fontVariantNumeric: 'tabular-nums' }}>
+              {stats.pollsResolved.toLocaleString()}
+            </div>
+            <div className="font-mono" data-testid="hero-stat-label" style={{ color: HERO_STAT_LABEL_COLOR, fontSize: HERO_STAT_LABEL_SIZE, letterSpacing: '0.06em', textTransform: 'uppercase', marginTop: 4, overflowWrap: 'anywhere' }}>
+              polls resolved
+            </div>
+          </div>
+          <div className="cs-hero-stat" data-testid="hero-stat">
+            <div className="font-mono" style={{ color: HERO_STAT_VALUE_COLOR, fontSize: 24, lineHeight: 1.2, fontVariantNumeric: 'tabular-nums' }}>
+              {stats.regions}
+            </div>
+            <div className="font-mono" data-testid="hero-stat-label" style={{ color: HERO_STAT_LABEL_COLOR, fontSize: HERO_STAT_LABEL_SIZE, letterSpacing: '0.06em', textTransform: 'uppercase', marginTop: 4, overflowWrap: 'anywhere' }}>
+              regions
+            </div>
+          </div>
         </div>
       </div>
 
