@@ -17,6 +17,7 @@ const watch = (page: Page, origin: string) => {
 const screens = [
   { name: 'landing page', path: '/', heading: /Verified-human polling for public\s+intelligence/ },
   { name: 'active polls (primary public screen)', path: '/polls', heading: /What civic questions are open right now/ },
+  { name: 'methodology', path: '/methodology', heading: /How CivicSignal stays trustworthy/ },
 ]
 
 for (const screen of screens) {
@@ -30,6 +31,21 @@ for (const screen of screens) {
 
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
     expect(overflow, 'no horizontal overflow').toBeLessThanOrEqual(0)
+
+    if (screen.path === '/methodology') {
+      await page.evaluate(async () => {
+        await document.fonts.ready
+      })
+      const clipped = await page.evaluate(() => {
+        const limit = window.innerWidth + 0.5
+        const root = document.querySelector('main') ?? document.body
+        const describe = (el: Element) => `${el.tagName.toLowerCase()}${el.className && typeof el.className === 'string' ? `.${el.className.trim().split(/\s+/).join('.')}` : ''}`
+        return Array.from(root.querySelectorAll('*'))
+          .filter((el) => el.getBoundingClientRect().right > limit)
+          .map((el) => `${describe(el)} right=${Math.round(el.getBoundingClientRect().right)}`)
+      })
+      expect(clipped, 'elements extending past the viewport').toEqual([])
+    }
     expect(problems).toEqual([])
   })
 }

@@ -18,6 +18,8 @@ for (const { path, shot } of pages) {
     await page.evaluate(async () => {
       await document.fonts.ready
     })
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
+    expect(overflow, 'no horizontal overflow').toBeLessThanOrEqual(0)
     const body = await page.screenshot({ fullPage: true, animations: 'disabled', caret: 'hide' })
     await testInfo.attach(`${shot}-${testInfo.project.name}`, { body, contentType: 'image/png' })
   })
