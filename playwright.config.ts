@@ -10,13 +10,12 @@ const origin = `http://127.0.0.1:${port}`
 export default defineConfig({
   testDir: './e2e',
   testMatch: '**/*.spec.ts',
-  grep: /@smoke/,
   forbidOnly: true,
   retries: 0,
   timeout: 30_000,
   reporter: 'list',
   outputDir: './test-results',
-  use: { baseURL: origin, headless: true, trace: 'retain-on-failure' },
+  use: { baseURL: origin, headless: true, trace: 'retain-on-failure', deviceScaleFactor: 1, colorScheme: 'light' },
   projects: [
     { name: 'chromium-1440', use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } } },
     {
