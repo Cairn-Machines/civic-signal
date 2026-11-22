@@ -101,7 +101,7 @@ const SECTIONS = [
 ]
 
 export const MethodPage = () => (
-  <div className="bg-parchment-bg text-parchment-ink" style={{ minHeight: '100%' }}>
+  <main className="bg-parchment-bg text-parchment-ink" style={{ minHeight: '100%' }}>
 
     {/* HERO BAND */}
     <section style={{ borderBottom: '1px solid #D9D1BD' }}>
@@ -280,5 +280,5 @@ export const MethodPage = () => (
       </div>
     </section>
 
-  </div>
+  </main>
 )
