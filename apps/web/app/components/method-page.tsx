@@ -101,16 +101,15 @@ const SECTIONS = [
 ]
 
 export const MethodPage = () => (
-  <main className="bg-parchment-bg text-parchment-ink" style={{ minHeight: '100%' }}>
+  <main className="bg-parchment-bg text-parchment-ink" data-testid="page-main" style={{ minHeight: '100%' }}>
 
     {/* HERO BAND */}
     <section style={{ borderBottom: '1px solid #D9D1BD' }}>
       <div
-        className="cs-page-pad cs-responsive-grid cs-method-hero"
+        className="cs-page-container cs-responsive-grid cs-method-hero"
         style={{
-          maxWidth: 1280,
-          margin: '0 auto',
-          padding: '64px 40px 32px',
+          paddingTop: 64,
+          paddingBottom: 32,
           display: 'grid',
           gridTemplateColumns: '0.9fr 1.1fr',
           gap: 56,
@@ -152,7 +151,7 @@ export const MethodPage = () => (
     </section>
 
     {/* SIX NUMBERED SECTIONS */}
-    <section className="cs-page-pad" style={{ maxWidth: 1280, margin: '0 auto' }}>
+    <section className="cs-page-container">
       {SECTIONS.map((s, i) => (
         <div
           key={s.id}
@@ -246,11 +245,10 @@ export const MethodPage = () => (
       }}
     >
       <div
-        className="cs-page-pad cs-responsive-grid cs-method-cta"
+        className="cs-page-container cs-responsive-grid cs-method-cta"
         style={{
-          maxWidth: 1280,
-          margin: '0 auto',
-          padding: '64px 40px 96px',
+          paddingTop: 64,
+          paddingBottom: 96,
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
           gap: 32,

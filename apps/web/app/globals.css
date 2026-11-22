@@ -53,6 +53,35 @@
 }
 
 @layer components {
+  .cs-page-container {
+    width: 100%;
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 56px;
+    padding-right: 56px;
+  }
+
+  .cs-hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .cs-hero-stat {
+    min-width: 0;
+    padding-left: 24px;
+    border-left: 1px solid var(--color-parchment-line);
+  }
+
+  .cs-hero-stat:first-child {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .cs-control {
+    min-height: 32px;
+  }
+
   .cs-page-pad {
     padding-left: 40px;
     padding-right: 40px;
@@ -80,6 +109,7 @@
   }
 
   .cs-nav-pad,
+  .cs-page-container,
   .cs-page-pad {
     padding-left: 20px !important;
     padding-right: 20px !important;
@@ -109,6 +139,18 @@
     font-size: 34px !important;
   }
 
+  .cs-hero-stat {
+    padding-left: 12px;
+  }
+
+  .cs-control {
+    min-height: 44px !important;
+  }
+
+  .cs-control:focus-visible {
+    outline: 2px solid var(--color-parchment-accent);
+    outline-offset: 2px;
+  }
   .cs-method-hero {
     padding-top: 40px !important;
     padding-bottom: 24px !important;

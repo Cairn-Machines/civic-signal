@@ -7,6 +7,7 @@ interface BadgeProps {
   mono?: boolean
   children: React.ReactNode
   className?: string
+  'data-testid'?: string
 }
 
 const TONE_CLASSES: Record<BadgeTone, string> = {
@@ -19,8 +20,9 @@ const TONE_CLASSES: Record<BadgeTone, string> = {
   solid: 'bg-parchment-ink text-parchment-bg border border-parchment-ink',
 }
 
-export const Badge = ({ tone = 'neutral', mono, children, className }: BadgeProps) => (
+export const Badge = ({ tone = 'neutral', mono, children, className, 'data-testid': testId }: BadgeProps) => (
   <span
+    data-testid={testId}
     className={[
       'inline-flex items-center px-2 py-[3px] text-[11px] font-medium rounded',
       TONE_CLASSES[tone],
