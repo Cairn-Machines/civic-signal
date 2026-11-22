@@ -109,6 +109,28 @@
     font-size: 34px !important;
   }
 
+  .cs-method-hero {
+    padding-top: 40px !important;
+    padding-bottom: 24px !important;
+    gap: 20px !important;
+  }
+
+  .cs-method-section {
+    padding-top: 32px !important;
+    padding-bottom: 32px !important;
+    gap: 16px !important;
+  }
+
+  .cs-method-cta {
+    padding-top: 40px !important;
+    padding-bottom: 56px !important;
+    gap: 20px !important;
+  }
+
+  .cs-cta-actions {
+    justify-content: flex-start !important;
+  }
+
   .cs-stack-mobile {
     align-items: flex-start !important;
     flex-direction: column !important;

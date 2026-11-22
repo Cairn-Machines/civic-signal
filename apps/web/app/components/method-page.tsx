@@ -101,11 +101,12 @@ const SECTIONS = [
 ]
 
 export const MethodPage = () => (
-  <div className="bg-parchment-bg text-parchment-ink" style={{ minHeight: '100%' }}>
+  <main className="bg-parchment-bg text-parchment-ink" style={{ minHeight: '100%' }}>
 
     {/* HERO BAND */}
     <section style={{ borderBottom: '1px solid #D9D1BD' }}>
       <div
+        className="cs-page-pad cs-responsive-grid cs-method-hero"
         style={{
           maxWidth: 1280,
           margin: '0 auto',
@@ -116,9 +117,10 @@ export const MethodPage = () => (
           alignItems: 'end',
         }}
       >
-      <div>
+      <div style={{ minWidth: 0 }}>
         <Eyebrow>Methodology · v0.9 beta</Eyebrow>
         <h1
+          className="cs-hero-title"
           style={{
             margin: '14px 0 0',
             fontSize: 52,
@@ -134,6 +136,7 @@ export const MethodPage = () => (
       </div>
       <p
         style={{
+          minWidth: 0,
           margin: 0,
           fontSize: 16,
           lineHeight: 1.55,
@@ -149,10 +152,11 @@ export const MethodPage = () => (
     </section>
 
     {/* SIX NUMBERED SECTIONS */}
-    <section style={{ maxWidth: 1280, margin: '0 auto', padding: '0 40px' }}>
+    <section className="cs-page-pad" style={{ maxWidth: 1280, margin: '0 auto' }}>
       {SECTIONS.map((s, i) => (
         <div
           key={s.id}
+          className="cs-responsive-grid cs-method-section"
           style={{
             display: 'grid',
             gridTemplateColumns: '120px 1fr 1.2fr',
@@ -164,13 +168,13 @@ export const MethodPage = () => (
           {/* Col 1 — number */}
           <div
             className="font-mono"
-            style={{ fontSize: 12, color: '#6B7488', letterSpacing: '0.06em' }}
+            style={{ minWidth: 0, fontSize: 12, color: '#6B7488', letterSpacing: '0.06em' }}
           >
             {s.n}
           </div>
 
           {/* Col 2 — heading + description */}
-          <div>
+          <div style={{ minWidth: 0 }}>
             <h2
               style={{
                 margin: 0,
@@ -199,6 +203,7 @@ export const MethodPage = () => (
           {/* Col 3 — bullets */}
           <div
             style={{
+              minWidth: 0,
               display: 'flex',
               flexDirection: 'column',
               gap: 0,
@@ -216,7 +221,7 @@ export const MethodPage = () => (
                   alignItems: 'center',
                 }}
               >
-                <span style={{ fontSize: 13.5, color: '#3A4861' }}>{b}</span>
+                <span style={{ minWidth: 0, fontSize: 13.5, color: '#3A4861' }}>{b}</span>
                 <span
                   style={{
                     width: 6,
@@ -241,6 +246,7 @@ export const MethodPage = () => (
       }}
     >
       <div
+        className="cs-page-pad cs-responsive-grid cs-method-cta"
         style={{
           maxWidth: 1280,
           margin: '0 auto',
@@ -263,7 +269,7 @@ export const MethodPage = () => (
         >
           Read the source. Propose a poll. Run the auditor.
         </h2>
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
+        <div className="cs-cta-actions" style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'flex-end' }}>
           <Link href="https://github.com/Cairn-Machines/civic-signal" target="_blank" rel="noopener noreferrer">
             <Btn kind="ghost" size="md">Auditor CLI →</Btn>
           </Link>
@@ -274,5 +280,5 @@ export const MethodPage = () => (
       </div>
     </section>
 
-  </div>
+  </main>
 )
