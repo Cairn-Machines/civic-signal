@@ -283,14 +283,12 @@ export const LandingPage = ({ polls, stats }: { polls: Poll[]; stats: Stats }) =
             h: 'Panels for hard cases.',
             d: 'Trusted topic panelists review dispute evidence and resolution edge cases, preserving notes and decisions in the audit trail.',
           },
-        ].map((pl, i) => (
+        ].map((pl) => (
           <div
             key={pl.n}
-            style={{
-              padding: i === 0 ? '36px 32px 36px 0' : '36px 32px 36px 32px',
-              borderRight: i < 3 ? '1px solid #D9D1BD' : 'none',
-              position: 'relative',
-            }}
+            className="cs-step-card"
+            data-testid="how-step"
+            style={{ position: 'relative' }}
           >
             <span className="font-mono" style={{ fontSize: 12, color: '#6B7488', letterSpacing: '0.06em' }}>
               {pl.n}
