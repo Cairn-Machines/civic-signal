@@ -82,6 +82,25 @@
     min-height: 32px;
   }
 
+  /* Keyboard focus ring at every width; the offset keeps it outside a dark (active) fill. */
+  .cs-control:focus-visible {
+    outline: 2px solid var(--color-parchment-accent);
+    outline-offset: 2px;
+  }
+
+  .cs-step-card {
+    padding: 36px 32px;
+    border-right: 1px solid var(--color-parchment-line);
+  }
+
+  .cs-step-card:first-child {
+    padding-left: 0;
+  }
+
+  .cs-step-card:last-child {
+    border-right: none;
+  }
+
   .cs-page-pad {
     padding-left: 40px;
     padding-right: 40px;
@@ -147,10 +166,18 @@
     min-height: 44px !important;
   }
 
-  .cs-control:focus-visible {
-    outline: 2px solid var(--color-parchment-accent);
-    outline-offset: 2px;
+  .cs-step-card,
+  .cs-step-card:first-child {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--color-parchment-line);
   }
+
+  .cs-step-card:last-child {
+    border-bottom: none;
+  }
+
   .cs-method-hero {
     padding-top: 40px !important;
     padding-bottom: 24px !important;
