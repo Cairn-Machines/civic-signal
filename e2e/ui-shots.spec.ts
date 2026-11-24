@@ -108,6 +108,11 @@ test('@ui-shots how-it-works cards align at both widths', async ({ page }, testI
   await page.goto('/')
   const steps = page.getByTestId('how-step')
   await expect(steps).toHaveCount(4)
+  await page.waitForLoadState('networkidle')
+  await page.evaluate(async () => {
+    await document.fonts.ready
+  })
+  await steps.first().scrollIntoViewIfNeeded()
   const m = await steps.evaluateAll((els) => els.map((el) => {
     const r = el.getBoundingClientRect()
     const style = getComputedStyle(el)
@@ -119,17 +124,18 @@ test('@ui-shots how-it-works cards align at both widths', async ({ page }, testI
       borderRight: parseFloat(style.borderRightWidth),
     }
   }))
+  const ctx = JSON.stringify({ project: testInfo.project.name, vw: page.viewportSize(), m })
   if (testInfo.project.name === 'chromium-390') {
     for (const c of m) {
-      expect(c.left, 'card left').toBeCloseTo(m[0].left, 0)
-      expect(c.h3Left, 'h3 left').toBeCloseTo(m[0].h3Left, 0)
+      expect(c.left, `card left ${ctx}`).toBeCloseTo(m[0].left, 0)
+      expect(c.h3Left, `h3 left ${ctx}`).toBeCloseTo(m[0].h3Left, 0)
     }
-    for (const c of m.slice(0, 3)) expect(c.borderRight, 'no vertical rule').toBe(0)
+    for (const c of m.slice(0, 3)) expect(c.borderRight, `no vertical rule ${ctx}`).toBe(0)
   } else if (testInfo.project.name === 'chromium-1440') {
-    expect(new Set(m.map((c) => Math.round(c.left))).size, 'four distinct columns').toBe(4)
-    for (const c of m) expect(c.top, 'tops equal').toBeCloseTo(m[0].top, 0)
-    expect(m[0].paddingLeft, 'card 01 flush left').toBe(0)
-    for (const c of m.slice(0, 3)) expect(c.borderRight, 'vertical divider').toBe(1)
+    expect(new Set(m.map((c) => Math.round(c.left))).size, `four distinct columns ${ctx}`).toBe(4)
+    for (const c of m) expect(c.top, `tops equal ${ctx}`).toBeCloseTo(m[0].top, 0)
+    expect(m[0].paddingLeft, `card 01 flush left ${ctx}`).toBe(0)
+    for (const c of m.slice(0, 3)) expect(c.borderRight, `vertical divider ${ctx}`).toBe(1)
   }
 })
 
